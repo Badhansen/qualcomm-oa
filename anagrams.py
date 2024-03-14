@@ -1,3 +1,4 @@
+from typing import List
 from collections import defaultdict
 import threading
 import unittest
@@ -5,12 +6,12 @@ import unittest
 PATH = 'ENTER_YOUR_PATH'
 
 class Anagrams:
-    def __init__(self, file_path):
-        self.dictionary = defaultdict(list)
+    def __init__(self, file_path: str):
+        self.dictionary: defaultdict[str, List[str]] = defaultdict(list)
         self.lock = threading.Lock()
         self.build_dictionary(file_path)
 
-    def get_anagrams(self, word):
+    def get_anagrams(self, word: str) -> List[str]:
         with self.lock:
             if not word.isalnum() or any(c.isdigit() for c in word):
                 return ["Invalid Word"]
@@ -22,7 +23,7 @@ class Anagrams:
         
         return ["Not Found"]
     
-    def build_dictionary(self, file_path):
+    def build_dictionary(self, file_path: str):
         words = open(file_path).readlines()
         for word in words:
             word = word.strip()
